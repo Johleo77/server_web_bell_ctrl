@@ -1,0 +1,71 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #000428, #004e92); /* Dégradé de bleu foncé */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    color: #fff;
+}
+
+h1 {
+    color: #ffcc00; /* Couleur jaune pour le contraste */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px #000; /* Ombre pour plus de lisibilité */
+}
+
+button {
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Effet de survol */
+}
+
+#status {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #333;
+    padding: 10px 20px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    display: inline-block;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8); /* Fond blanc avec opacité */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    backdrop-filter: blur(10px); /* Effet de flou pour un style moderne */
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); /* Motif informatique */
+    opacity: 0.1;
+    z-index: -1;
+}
+
+

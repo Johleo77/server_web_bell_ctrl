@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>controle de la cloche</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Contrôle de la cloche</h1>
+        <button onclick="controlBell('close')">Ouvrir</button>
+        <button onclick="controlBell('open')">Fermer</button>
+        <button onclick="getStatus()">Status</button>
+        <div id="status">Status: Unknown</div>
+    </div>
+
+    <script>
+        function controlBell(action) {
+            fetch('/' + action)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('status').innerText = 'Status: ' + data.status;
+                });
+        }
+
+        function getStatus() {
+            fetch('/status')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('status').innerText = 'Status: ' + data.status;
+                });
+        }
+    </script>
+</body>
+</html>
