@@ -1,0 +1,19 @@
+{
+  "cloches": [
+    {
+      "nom": "bell1",
+      "motor_gpio": 17,
+      "status_gpio": 18
+    },
+    {
+      "nom": "bell2",
+      "motor_gpio": 22,
+      "status_gpio": 23
+    },
+    {
+      "nom": "bell3",
+      "motor_gpio": 24,
+      "status_gpio": 25
+    }
+]
+}

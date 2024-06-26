@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control bells</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cloche {
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        .cloche h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+        .cloche button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .cloche button:hover {
+            background-color: #0056b3;
+        }
+        .cloche button:active {
+            background-color: #0056b3;
+            transform: translateY(1px);
+        }
+        .status {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Control bells</h1>
+    <div id="cloches"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("/config")
+                .then(response => response.json())
+                .then(data => {
+                    const clochesDiv = document.getElementById("cloches");
+                    data.cloches.forEach(cloche => {
+                        const clocheDiv = document.createElement("div");
+                        clocheDiv.className = "cloche";
+                        clocheDiv.innerHTML = `
+                            <h2>${cloche.nom}</h2>
+                            <button onclick="confirmAction('${cloche.nom}', 'close')">Open</button>
+                            <button onclick="confirmAction('${cloche.nom}', 'open')">Close</button>
+                            <button onclick="getStatus('${cloche.nom}')">Get Status</button>
+                            <p>Status: <span id="${cloche.nom}-status" class="status">Unknown</span></p>
+                        `;
+                        clochesDiv.appendChild(clocheDiv);
+                    });
+                });
+        });
+
+        function confirmAction(nom, action) {
+            const actionVerb = action === 'open' ? 'close' : 'open';
+            if (confirm(`Do you really want ${actionVerb} ${nom} ?`)) {
+                controlCloche(nom, action);
+            }
+        }
+
+        function controlCloche(nom, action) {
+            fetch(`/${nom}/${action}`, { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    getStatus(nom); // Met à jour le statut après l'action
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function getStatus(nom) {
+            fetch(`/${nom}/status`)
+                .then(response => response.json())
+                .then(data => {
+                    const statusSpan = document.getElementById(`${nom}-status`);
+                    statusSpan.textContent = data.status;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
